@@ -5,7 +5,8 @@ package org.canmo;
  * A cell in the table with up/down and left/right links that form doubly
  * linked lists in both directions. It also includes a link to the column
  * head.
- */
+  * @author canzu
+  */
 public class Node<ColumnName> {
     /** Left */
     Node<ColumnName> left;
