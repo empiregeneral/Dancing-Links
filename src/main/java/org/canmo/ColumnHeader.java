@@ -5,6 +5,7 @@ package org.canmo;
  * satisfy this column. The names are provided by the application and can
  * be anything. The size is used for the heuristic for picking the next
  * column to explore.
+ * @author canzuo
  */
 public class ColumnHeader<ColumnName> extends Node<ColumnName> {
 
