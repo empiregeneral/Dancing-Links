@@ -15,9 +15,12 @@ import java.util.StringTokenizer;
  */
 public class ExtractCover {
     private int[][] grid;
+    private boolean[][] board;
+    private int size;
 
     public ExtractCover(InputStream inputStream) throws IOException {
         readFromInputStream(inputStream);
+        board = init(this.grid);
     }
 
     /**
@@ -39,17 +42,53 @@ public class ExtractCover {
             result.add(col);
             line = reader.readLine();
         }
-        int size = result.size();
+        this.size = result.size();
         this.grid = result.toArray(new int[size][]);
         reader.close();
     }
 
+    private boolean[][] init(int[][] values) {
+        List<boolean[]> booleanList = new ArrayList<boolean[]>(values.length);
+        for (int i = 0; i < values.length; i++) {
+            booleanList.add(transform01Matrix(values[i]));
+        }
+        return booleanList.toArray(new boolean[values.length][]);
+    }
+
+    private boolean[] transform01Matrix(int[] items) {
+        boolean[] tmp = new boolean[items.length];
+        for (int i = 0; i < items.length; i++) {
+            if ((items[i] == 1)) {
+                tmp[i] = true;
+            } else {
+                tmp[i] = false;
+            }
+        }
+        return tmp;
+    }
+
+
+
+
     public void solve() {
         DancingLinks<ColumnName> model = makeModel();
+        System.out.println(model.toString());
+        int result = model.solve((new SolutionPrinter(board[0].length)));
+
     }
 
     private DancingLinks<ColumnName> makeModel() {
         DancingLinks<ColumnName> model = new DancingLinks<ColumnName>();
+        for ( int y = 0; y < this.board[0].length; y++) {
+            model.addColumn(new ColumnConstraint(y, false));
+        }
+
+       // System.out.println(model.getNumberColumns());
+        System.out.println(model.getColumnName(6));
+
+        for ( int x = 0; x < this.board.length; x++) {
+            model.addRow(board[x]);
+        }
         return model;
     }
 
@@ -61,7 +100,7 @@ public class ExtractCover {
         for ( int i = 0; i < args.length; ++i) {
             ExtractCover problem = new ExtractCover(new FileInputStream(args[i]));
             System.out.println("Solving " + args[i]);
-            System.out.println(Arrays.deepToString(problem.grid));
+            problem.solve();
         }
 
     }
