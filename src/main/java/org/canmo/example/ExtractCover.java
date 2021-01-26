@@ -6,7 +6,6 @@ import org.canmo.DancingLinks;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -17,6 +16,7 @@ public class ExtractCover {
     private int[][] grid;
     private boolean[][] board;
     private int size;
+    private String labels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     public ExtractCover(InputStream inputStream) throws IOException {
         readFromInputStream(inputStream);
@@ -68,23 +68,17 @@ public class ExtractCover {
     }
 
 
-
-
     public void solve() {
         DancingLinks<ColumnName> model = makeModel();
-        System.out.println(model.toString());
-        int result = model.solve((new SolutionPrinter(board[0].length)));
+        int result = model.solve((new SolutionPrinter()));
 
     }
 
     private DancingLinks<ColumnName> makeModel() {
         DancingLinks<ColumnName> model = new DancingLinks<ColumnName>();
         for ( int y = 0; y < this.board[0].length; y++) {
-            model.addColumn(new ColumnConstraint(y, false));
+            model.addColumn(new ColumnConstraint(""+labels.charAt(y)));
         }
-
-       // System.out.println(model.getNumberColumns());
-        System.out.println(model.getColumnName(6));
 
         for ( int x = 0; x < this.board.length; x++) {
             model.addRow(board[x]);
@@ -99,7 +93,7 @@ public class ExtractCover {
         }
         for ( int i = 0; i < args.length; ++i) {
             ExtractCover problem = new ExtractCover(new FileInputStream(args[i]));
-            System.out.println("Solving " + args[i]);
+            // System.out.println("Solving " + args[i]);
             problem.solve();
         }
 

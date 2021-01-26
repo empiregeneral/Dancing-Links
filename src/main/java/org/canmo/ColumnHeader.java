@@ -25,14 +25,4 @@ public class ColumnHeader<ColumnName> extends Node<ColumnName> {
                 ", name=" + name +
                 '}';
     }
-
-    public static void main(String[] args) {
-        ColumnHeader<org.canmo.ColumnName> header = new ColumnHeader<org.canmo.ColumnName>(null, 0);
-        header.left = header;
-        header.right = header;
-        header.up = header;
-        header.down = header;
-
-        System.out.println(header.toString());
-    }
 }

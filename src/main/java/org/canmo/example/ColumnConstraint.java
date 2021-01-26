@@ -6,19 +6,16 @@ import org.canmo.ColumnName;
  * @author Administrator
  */
 public class ColumnConstraint implements ColumnName {
-    boolean isMark;
-    int y;
+    String label;
 
-    public ColumnConstraint(int y, boolean isMark) {
-        this.y = y;
-        this.isMark = isMark;
+    public ColumnConstraint(String label) {
+        this.label = label;
     }
 
     @Override
     public String toString() {
         return "ColumnConstraint{" +
-                "isMark=" + isMark +
-                ", y=" + y +
+                "label='" + label + '\'' +
                 '}';
     }
 }

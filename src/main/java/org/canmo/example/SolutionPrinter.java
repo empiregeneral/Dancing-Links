@@ -3,6 +3,7 @@ package org.canmo.example;
 import org.canmo.ColumnName;
 import org.canmo.DancingLinks;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -12,36 +13,24 @@ import java.util.List;
  * @author canzuo
  */
 public class SolutionPrinter implements DancingLinks.SolutionAcceptor<ColumnName> {
-    private int size;
-
-    public SolutionPrinter(int size) {
-        this.size = size;
-    }
 
     public void solution(List<List<ColumnName>> value) {
-        System.out.println(stringifySolution(this.size, value));
+        System.out.println(stringifySolution(value));
     }
 
-    private String stringifySolution(int size, List<List<ColumnName>> solution) {
-        int[] picture = new int[size];
+    private String stringifySolution(List<List<ColumnName>> solution) {
         StringBuilder sb = new StringBuilder();
-        for (List<ColumnName> row : solution) {
-            int y = -1;
-            int num = -1;
-            for (ColumnName item : row) {
-                if (item instanceof ColumnName) {
-                    y = ((ColumnConstraint) item).y;
-                    num = y;
-                }
+        Iterator<List<ColumnName>> rows = solution.listIterator();
+        for (;rows.hasNext();) {
+            final List<ColumnName> row = rows.next();
+            final Iterator<ColumnName> nodes = row.iterator();
+            while (nodes.hasNext()) {
+                ColumnName node = nodes.next();
+                sb.append(node.toString());
+                sb.append(" ");
             }
-            picture[y] = num;
+            sb.append("\n");
         }
-
-        for (int i = 0; i < size; i++) {
-            sb.append(picture[i]);
-            sb.append(" ");
-        }
-        sb.append("\n");
         return sb.toString();
     }
 }

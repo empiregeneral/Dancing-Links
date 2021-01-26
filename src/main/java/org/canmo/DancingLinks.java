@@ -146,7 +146,7 @@ public class DancingLinks<ColumnName> {
      * @param col the column to hide
      */
     private void coverColumn(ColumnHeader<ColumnName> col) {
-        System.out.println("cover " + col.head.name);
+        // System.out.println("cover " + col.head.name);
         // remove the column
         col.right.left = col.left;
         col.left.right = col.right;
@@ -168,7 +168,7 @@ public class DancingLinks<ColumnName> {
      * @param col the column to unhide
      */
     private void uncoverColumn(ColumnHeader<ColumnName> col) {
-        System.out.println("uncover " + col.head.name);
+        // System.out.println("uncover " + col.head.name);
         Node<ColumnName> row = col.up;
         while (row != col) {
             Node<ColumnName> node = row.left;
