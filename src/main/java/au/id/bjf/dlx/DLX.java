@@ -164,9 +164,15 @@ public class DLX {
 	public static final void setColumnsAsOptional(ColumnObject h, 
 			int numMandatory, int numOptional) {
 		
-		if (numMandatory < 0) throw new IllegalArgumentException("numMandatory");
-		if (numOptional < 1) throw new IllegalArgumentException("numOptional");
-		if (h == null) throw new IllegalArgumentException("total");
+		if (numMandatory < 0) {
+			throw new IllegalArgumentException("numMandatory");
+		}
+		if (numOptional < 1) {
+			throw new IllegalArgumentException("numOptional");
+		}
+		if (h == null) {
+			throw new IllegalArgumentException("total");
+		}
 		
 		int total = numMandatory + numOptional;
 		DataObject columns[] = new DataObject[total];

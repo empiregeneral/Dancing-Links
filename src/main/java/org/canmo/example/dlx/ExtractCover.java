@@ -1,4 +1,4 @@
-package org.canmo.example;
+package org.canmo.example.dlx;
 
 import org.canmo.ColumnName;
 import org.canmo.DancingLinks;
@@ -93,7 +93,6 @@ public class ExtractCover {
         }
         for ( int i = 0; i < args.length; ++i) {
             ExtractCover problem = new ExtractCover(new FileInputStream(args[i]));
-            // System.out.println("Solving " + args[i]);
             problem.solve();
         }
 

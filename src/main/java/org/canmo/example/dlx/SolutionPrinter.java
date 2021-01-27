@@ -1,4 +1,4 @@
-package org.canmo.example;
+package org.canmo.example.dlx;
 
 import org.canmo.ColumnName;
 import org.canmo.DancingLinks;
