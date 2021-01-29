@@ -14,6 +14,7 @@ import java.util.List;
  */
 public class SolutionPrinter implements DancingLinks.SolutionAcceptor<ColumnName> {
 
+    @Override
     public void solution(List<List<ColumnName>> value) {
         System.out.println(stringifySolution(value));
     }

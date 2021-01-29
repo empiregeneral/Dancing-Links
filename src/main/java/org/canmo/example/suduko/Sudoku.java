@@ -48,7 +48,7 @@ public class Sudoku {
      */
     static String stringifySolution(int size, List<List<ColumnName>> solution) {
         int[][] picture = new int[size][size];
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         // go through the rows selected in the model and build a picture of the
         // solution.
         for(List<ColumnName> row: solution) {
@@ -68,12 +68,31 @@ public class Sudoku {
         // build the string
         for(int y=0; y < size; ++y) {
             for (int x=0; x < size; ++x) {
-                result.append(picture[y][x]);
-                result.append(" ");
+                result.append((char)(picture[y][x] - 1 + 'A'));
             }
-            result.append("\n");
         }
         return result.toString();
+    }
+
+    static String puzzleToString(String answer, int size) {
+        final String NL = System.getProperties().getProperty("line.separator");
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < answer.length(); i++) {
+            sb.append(" ");
+            sb.append(answer.charAt(i));
+
+            if (i == 256) {
+                sb.append(NL);
+            } else if ( i % 16 == 15) {
+                sb.append(NL);
+                if ( i % 64 == 63) {
+                    sb.append("---------|---------|---------|--------").append(NL);
+                }
+            } else if ( i  % 4 == 3) {
+                sb.append(" |");
+            }
+        }
+        return sb.toString();
     }
 
     /**
@@ -104,8 +123,9 @@ public class Sudoku {
         }
 
 
+        @Override
         public void solution(List<List<ColumnName>> names) {
-            System.out.println(stringifySolution(size, names));
+            System.out.println(puzzleToString(stringifySolution(size, names), 16));
         }
     }
 
@@ -320,35 +340,29 @@ public class Sudoku {
      * Solves a set of sudoku puzzles.
      * @param args a list of puzzle filenames to solve
      */
-
     public static void main(String[] args) throws IOException {
-        long start = System.currentTimeMillis();
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
         String line;
         List<int[][]> puzzles = new ArrayList<int[][]>();
         for (; ((line = reader.readLine()) != null);) {
-            int[] puzzle = new int[81];
+            int[] puzzle = new int[256];
             for (int i = 0; i < puzzle.length; i++) {
                 char ch = line.charAt(i);
-                if (ch == '.' || ch == '0') {
+                if (ch == '-' || ch == '0') {
                     puzzle[i] = -1;
                 } else {
-                    puzzle[i] = ch - '0';
+                    puzzle[i] = ch - 'A' + 1;
                 }
             }
-            puzzles.add(transformArray(puzzle, 9));
+            puzzles.add(transformArray(puzzle, 16));
         }
 
         for (int[][] puzzle : puzzles) {
-            Sudoku problem = new Sudoku(puzzle, 9);
+            Sudoku problem = new Sudoku(puzzle, 16);
             problem.solve();
         }
 
         reader.close();
-        System.out.println("Elapse time: " + (System.currentTimeMillis() - start) + " ms.");
     }
-
-
-
 }

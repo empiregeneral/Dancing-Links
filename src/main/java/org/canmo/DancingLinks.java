@@ -375,6 +375,4 @@ public class DancingLinks<ColumnName> {
          */
         void solution(List<List<ColumnName>> value);
     }
-
-
 }
